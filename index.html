@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry, Sofia</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== EDIT COLORS HERE ========== */
+        :root {
+            --primary-pink: #ffc6d3;
+            --soft-pink: #ffe5ec;
+            --cream: #fff9f5;
+            --beige: #f5ebe0;
+            --accent: #ff9bb5;
+            --text-dark: #4a4a4a;
+            --text-light: #7a7a7a;
+        }
+
+        /* ========== GENERAL STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== NAVIGATION ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 249, 245, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        nav ul li a:hover {
+            background: var(--primary-pink);
+            color: white;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 20px;
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--cream);
+            border-radius: 8px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* ========== HERO SECTION ========== */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--cream) 50%, var(--beige) 100%);
+            position: relative;
+            padding: 20px;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(255, 198, 211, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 155, 181, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        #hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        #hero p {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            max-width: 600px;
+            margin-bottom: 40px;
+            color: var(--text-light);
+            animation: fadeInUp 1s ease 0.2s backwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 155, 181, 0.3);
+            animation: fadeInUp 1s ease 0.4s backwards;
+            position: relative;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 155, 181, 0.4);
+            background: #ff87a3;
+        }
+
+        /* ========== WHAT I DID WRONG ========== */
+        #what-i-did {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 40px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            animation: fadeIn 1s ease;
+        }
+
+        #what-i-did h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        #what-i-did > p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mistake-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .mistake-list li {
+            padding: 20px;
+            margin: 15px 0;
+            background: var(--soft-pink);
+            border-radius: 15px;
+            border-left: 5px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .mistake-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(255, 155, 181, 0.2);
+        }
+
+        .mistake-list li::before {
+            content: '✗';
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* ========== WHAT I'VE LEARNED ========== */
+        #learned {
+            padding: 80px 20px;
+        }
+
+        #learned h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 50px;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .lesson-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 155, 181, 0.2);
+        }
+
+        .lesson-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .lesson-card p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* ========== PROMISES ========== */
+        #promises {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 40px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        #promises h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 20px;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        #promises > p {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .promises-list {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .promises-list li {
+            padding: 20px 20px 20px 60px;
+            margin: 20px 0;
+            background: var(--soft-pink);
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+        }
+
+        .promises-list li:hover {
+            background: var(--primary-pink);
+            transform: scale(1.02);
+        }
+
+        .promises-list li::before {
+            content: '♥';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* ========== MEMORIES ========== */
+        #memories {
+            padding: 80px 20px;
+        }
+
+        #memories h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 50px;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .memory-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .memory-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-pink), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .memory-card:hover .memory-image {
+            transform: scale(1.1);
+        }
+
+        .memory-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .memory-card:hover .memory-caption {
+            transform: translateY(0);
+        }
+
+        /* EDIT: Replace placeholder backgrounds with real images by adding:
+           background-image: url('your-image.jpg');
+           background-size: cover;
+           background-position: center;
+        */
+
+        /* ========== HANDWRITTEN NOTE ========== */
+        #note {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 40px 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #note h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .note-content {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            line-height: 1.8;
+            color: var(--text-dark);
+            text-align: left;
+        }
+
+        .note-content p {
+            margin-bottom: 25px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        /* ========== FINAL SECTION ========== */
+        #final {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        #final h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        /* ========== MODAL ========== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--accent);
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Intersection Observer animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== MOBILE RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: 0;
+                background: var(--cream);
+                width: 70%;
+                height: 100vh;
+                padding-top: 80px;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 15px 30px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            #what-i-did, #promises, #note {
+                padding: 40px 25px;
+                margin: 20px 10px;
+            }
+
+            .lesson-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+                padding: 30px 20px;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul id="nav-menu">
+            <li><a href="#hero" onclick="closeMenu()">Home</a></li>
+            <li><a href="#what-i-did" onclick="closeMenu()">What I Did</a></li>
+            <li><a href="#learned" onclick="closeMenu()">What I've Learned</a></li>
+            <li><a href="#promises" onclick="closeMenu()">Promises</a></li>
+            <li><a href="#memories" onclick="closeMenu()">Memories</a></li>
+            <li><a href="#note" onclick="closeMenu()">Note</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <h1>I'm Sorry, Sofia</h1>
+        <!-- EDIT: Change Sofia to your girlfriend's name -->
+        <p>I didn't listen when you needed me most, and I regret it deeply.</p>
+        <a href="#what-i-did" class="cta-button">Read My Apology</a>
+    </section>
+
+    <!-- What I Did Wrong -->
+    <section id="what-i-did" class="fade-in-section">
+        <h2>What I Did Wrong</h2>
+        <!-- EDIT: Customize this paragraph to reflect your specific situation -->
+        <p>Sofia, I need to be honest about how I failed you. When you were opening up to me, sharing your feelings and what was hurting you, I wasn't truly there. I let my mind wander, I interrupted you, and worst of all, I dismissed what you were feeling because I was too caught up in my own perspective. I made you feel unheard, and that's not what love looks like. I see that now.</p>
+
+        <!-- EDIT: Customize these specific mistakes to match your situation -->
+        <ul class="mistake-list">
+            <li>I talked over you instead of hearing you out completely</li>
+            <li>I got defensive and made excuses rather than acknowledging your pain</li>
+            <li>I was distracted by my phone when you needed my full attention</li>
+            <li>I tried to "fix" the problem instead of just being present with your feelings</li>
+        </ul>
+    </section>
+
+    <!-- What I've Learned -->
+    <section id="learned" class="fade-in-section">
+        <h2>What I've Learned From This</h2>
+
+        <!-- EDIT: Customize these lessons based on what you've genuinely learned -->
+        <div class="lesson-grid">
+            <div class="lesson-card">
+                <div class="icon">👂</div>
+                <p>Listening means caring, not just being silent while waiting to speak</p>
+            </div>
+            <div class="lesson-card">
+                <div class="icon">💭</div>
+                <p>Your feelings matter even when I don't fully understand them at first</p>
+            </div>
+            <div class="lesson-card">
+                <div class="icon">🤝</div>
+                <p>Being vulnerable enough to share takes courage, and I need to honor that</p>
+            </div>
+            <div class="lesson-card">
+                <div class="icon">💝</div>
+                <p>Love isn't just saying the right things—it's showing up with my whole heart</p>
+            </div>
+            <div class="lesson-card">
+                <div class="icon">🌱</div>
+                <p>Real growth happens when I'm willing to see my mistakes and change</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Promises -->
+    <section id="promises" class="fade-in-section">
+        <h2>My Promises To You, Sofia</h2>
+        <!-- EDIT: Change Sofia to your girlfriend's name -->
+        <p>These aren't just words—they're commitments I'm making to be better for you, for us.</p>
+
+        <!-- EDIT: Customize these promises to be specific and meaningful -->
+        <ul class="promises-list">
+            <li>I will put my phone away and give you my full attention when you're sharing something important</li>
+            <li>I will ask questions to understand better instead of assuming I know how you feel</li>
+            <li>I will pause before responding, especially when my first instinct is to defend myself</li>
+            <li>I will validate your emotions even when I don't immediately understand them</li>
+            <li>I will check in with you regularly to make sure you feel heard and valued</li>
+            <li>I will practice being present—truly present—in our conversations</li>
+            <li>I will remember that loving you means making space for all of your feelings, not just the easy ones</li>
+        </ul>
+    </section>
+
+    <!-- Our Memories -->
+    <section id="memories" class="fade-in-section">
+        <h2>What We Mean To Me</h2>
+
+        <!-- EDIT: Replace placeholder text with real captions, and add background-image URLs in CSS for real photos -->
+        <div class="memory-grid">
+            <div class="memory-card">
+                <div class="memory-image">Photo 1</div>
+                <div class="memory-caption">Our first date</div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">Photo 2</div>
+                <div class="memory-caption">That day in the park</div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">Photo 3</div>
+                <div class="memory-caption">When you made me laugh so hard</div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">Photo 4</div>
+                <div class="memory-caption">Our favorite spot</div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">Photo 5</div>
+                <div class="memory-caption">The moment I knew</div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">Photo 6</div>
+                <div class="memory-caption">Us, just being us</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Handwritten Note -->
+    <section id="note" class="fade-in-section">
+        <h2>A Note Just For You</h2>
+
+        <!-- EDIT: This is your personal message—make it truly yours -->
+        <div class="note-content">
+            <p>Dear Sofia,</p>
+
+            <p>I've been thinking a lot about the moment when I realized I wasn't really listening to you. It hit me hard because you deserve so much better than someone who's physically there but mentally checked out. You opened your heart to me, and instead of receiving that gift with the care it deserved, I let it slip through my fingers.</p>
+
+            <p>I want you to know that I see you now—really see you. I see how much courage it takes for you to be vulnerable with me. I see how patient you've been when I didn't deserve it. And I see how much I've hurt you by making you feel like your feelings weren't important enough for my full attention.</p>
+
+            <p>I'm not asking you to forget what happened or to pretend it didn't hurt. I'm asking for the chance to show you that I can grow, that I can be the partner you deserve—the one who listens not just with his ears, but with his heart. I love you, Sofia, and I'm ready to prove it through my actions, not just my words.</p>
+
+            <p class="signature">Always yours, Alex</p>
+            <!-- EDIT: Change Alex to your name -->
+        </div>
+    </section>
+
+    <!-- Final Section -->
+    <section id="final" class="fade-in-section">
+        <h2>I'm ready to listen whenever you're ready to talk.</h2>
+        <button class="cta-button" onclick="openModal()">Talk to me?</button>
+    </section>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal" onclick="closeModalOutside(event)">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>No Pressure, No Expectations</h3>
+            <p>Just you, me, and your feelings—this time I'll truly listen. Whenever you're ready, I'm here. Take all the time you need. I'm not going anywhere.</p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll with offset for fixed nav
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.remove('active');
+        }
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function closeModalOutside(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Close modal with Escape key
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const faders = document.querySelectorAll('.fade-in-section');
+
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -100px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('is-visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
